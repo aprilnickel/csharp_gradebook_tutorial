@@ -14,6 +14,20 @@ public class Book
         grades.Add(grade);
     }
 
+    public Statistics GetStatistics()
+    {
+        Statistics stats = new Statistics();
+        stats.average = 0.0;
+        stats.high = double.MinValue;
+        stats.low = double.MaxValue;
+        
+        stats.average = CalculateAverageGrade();
+        stats.high = CalculateHighestGrade();
+        stats.low = CalculateLowestGrade();
+        
+        return stats;
+    }
+    
     public double CalculateHighestGrade()
     {
         double highestGrade = grades.Max();
@@ -30,16 +44,5 @@ public class Book
     {
         double averageGrade = grades.Average();
         return averageGrade;
-    }
-
-    public void ShowStats()
-    {
-        double highestGrade = CalculateHighestGrade();
-        double lowestGrade = CalculateLowestGrade();
-        double averageGrade = CalculateAverageGrade();
-        
-        Console.WriteLine($"Highest grade: {highestGrade}");
-        Console.WriteLine($"Lowest grade: {lowestGrade}");
-        Console.WriteLine($"Average grade: {averageGrade}");
     }
 }

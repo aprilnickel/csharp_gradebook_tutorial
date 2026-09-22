@@ -10,6 +10,10 @@ class Program
         book.AddGrade(88);
         book.AddGrade(92);
         book.AddGrade(65);
-        book.ShowStats();
+        Statistics stats = book.GetStatistics();
+        
+        Console.WriteLine($"Highest grade: {stats.high}");
+        Console.WriteLine($"Lowest grade: {stats.low}");
+        Console.WriteLine($"Average grade: {stats.average}");
     }
 }
