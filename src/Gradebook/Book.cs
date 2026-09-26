@@ -23,28 +23,18 @@ public class Book
         stats.high = double.MinValue;
         stats.low = double.MaxValue;
         
-        stats.average = CalculateAverageGrade();
-        stats.high = CalculateHighestGrade();
-        stats.low = CalculateLowestGrade();
+        foreach (double grade in grades)
+        {
+            stats.average += grade;
+            stats.high = Math.Max(stats.high, grade);
+            stats.low = Math.Min(stats.low, grade);
+        }
+
+        if (grades.Count > 0)
+        {
+            stats.average /= grades.Count;
+        }
         
         return stats;
-    }
-    
-    public double CalculateHighestGrade()
-    {
-        double highestGrade = grades.Max();
-        return highestGrade;
-    }
-
-    public double CalculateLowestGrade()
-    {
-        double lowestGrade = grades.Min();
-        return lowestGrade;
-    }
-
-    public double CalculateAverageGrade()
-    {
-        double averageGrade = grades.Average();
-        return averageGrade;
     }
 }
