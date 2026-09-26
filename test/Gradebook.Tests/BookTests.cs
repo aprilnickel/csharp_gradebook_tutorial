@@ -15,4 +15,17 @@ public class BookTests
         
         Assert.Equal(75.0, actualAverage, 1);
     }
+    
+    [Fact]
+    public void GradeMustBeBetween0And100()
+    {
+        var book = new Book("Test Book");
+        book.AddGrade(-12);
+        book.AddGrade(105);
+        Statistics stats = book.GetStatistics();
+        
+        Assert.Equal(0.0, stats.Average);
+        Assert.Equal(double.MinValue, stats.High);
+        Assert.Equal(double.MaxValue, stats.Low);
+    }
 }
