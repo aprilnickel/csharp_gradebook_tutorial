@@ -4,7 +4,7 @@ class Program
 {
     static void Main(string[] args)
     {
-        var book = new Book();
+        var book = new Book("Grade Book");
         book.AddGrade(55);
         book.AddGrade(99);
         book.AddGrade(88);

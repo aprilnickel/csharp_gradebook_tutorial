@@ -3,10 +3,12 @@
 public class Book
 {
     private List<double> grades;
+    public string Name;
 
-    public Book()
+    public Book(string name)
     {
         grades = new List<double>();
+        Name = name;
     }
     
     public void AddGrade(double grade)
