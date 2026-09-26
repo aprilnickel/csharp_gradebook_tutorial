@@ -23,6 +23,32 @@ public class Book
         }
     }
 
+    public void AddLetterGrade(char letter)
+    {
+        switch (letter)
+        {
+            case 'A':
+                AddGrade(90);
+                break;
+            
+            case 'B':
+                AddGrade(80);
+                break;
+            
+            case 'C':
+                AddGrade(70);
+                break;
+            
+            case 'D':
+                AddGrade(60);
+                break;
+            
+            default:
+                AddGrade(0);
+                break;
+        }
+    }
+
     public Statistics GetStatistics()
     {
         Statistics stats = new Statistics();
@@ -40,6 +66,29 @@ public class Book
         if (grades.Count > 0)
         {
             stats.Average /= grades.Count;
+        }
+
+        switch (stats.Average)
+        {
+            case double grade when grade >= 90.0:
+                stats.Letter = 'A';
+                break;
+            
+            case double grade when grade >= 80.0:
+                stats.Letter = 'B';
+                break;
+            
+            case double grade when grade >= 70.0:
+                stats.Letter = 'C';
+                break;
+            
+            case double grade when grade >= 60.0:
+                stats.Letter = 'D';
+                break;
+            
+            default:
+                stats.Letter = 'F';
+                break;
         }
         
         return stats;

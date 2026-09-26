@@ -11,9 +11,11 @@ public class BookTests
         book.AddGrade(70.0);
         book.AddGrade(60.0);
         Statistics stats = book.GetStatistics();
-        double actualAverage = stats.Average;
         
-        Assert.Equal(75.0, actualAverage, 1);
+        Assert.Equal(75.0, stats.Average, 1);
+        Assert.Equal(90.0, stats.High, 1);
+        Assert.Equal(60.0, stats.Low, 1);
+        Assert.Equal('C', stats.Letter);
     }
     
     [Fact]

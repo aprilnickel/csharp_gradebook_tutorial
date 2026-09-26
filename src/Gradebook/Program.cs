@@ -15,5 +15,6 @@ class Program
         Console.WriteLine($"Highest grade: {stats.High}");
         Console.WriteLine($"Lowest grade: {stats.Low}");
         Console.WriteLine($"Average grade: {stats.Average}");
+        Console.WriteLine($"Letter grade: {stats.Letter}");
     }
 }
