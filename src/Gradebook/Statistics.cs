@@ -2,7 +2,7 @@
 
 public class Statistics
 {
-    public double average;
-    public double high;
-    public double low;
+    public double Average;
+    public double High;
+    public double Low;
 }

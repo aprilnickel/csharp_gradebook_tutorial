@@ -19,20 +19,20 @@ public class Book
     public Statistics GetStatistics()
     {
         Statistics stats = new Statistics();
-        stats.average = 0.0;
-        stats.high = double.MinValue;
-        stats.low = double.MaxValue;
+        stats.Average = 0.0;
+        stats.High = double.MinValue;
+        stats.Low = double.MaxValue;
         
         foreach (double grade in grades)
         {
-            stats.average += grade;
-            stats.high = Math.Max(stats.high, grade);
-            stats.low = Math.Min(stats.low, grade);
+            stats.Average += grade;
+            stats.High = Math.Max(stats.High, grade);
+            stats.Low = Math.Min(stats.Low, grade);
         }
 
         if (grades.Count > 0)
         {
-            stats.average /= grades.Count;
+            stats.Average /= grades.Count;
         }
         
         return stats;
