@@ -22,8 +22,8 @@ public class BookTests
     public void GradeMustBeBetween0And100()
     {
         var book = new Book("Test Book");
-        book.AddGrade(-12);
-        book.AddGrade(105);
+        Assert.Throws<ArgumentException>(() => book.AddGrade(-12));
+        Assert.Throws<ArgumentException>(() => book.AddGrade(105));
         Statistics stats = book.GetStatistics();
         
         Assert.Equal(0.0, stats.Average);
