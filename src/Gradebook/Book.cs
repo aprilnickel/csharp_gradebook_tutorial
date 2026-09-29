@@ -1,5 +1,7 @@
 ﻿namespace Gradebook;
 
+public delegate void GradeAddedDelegate(object sender, BookGradeAddedEventArgs args);
+
 public class Book
 {
     private List<double> grades;
@@ -41,12 +43,18 @@ public class Book
         if (grade <= 100 && grade >= 0)
         {
             grades.Add(grade);
+            if (GradeAdded != null)
+            {
+                GradeAdded(this, new BookGradeAddedEventArgs(grade));
+            }
         }
         else
         {
             throw new ArgumentException($"Invalid {nameof(grade)}; value must be between 0 and 100");
         }
     }
+    
+    public event GradeAddedDelegate GradeAdded;
 
     public void AddLetterGrade(char letter)
     {
@@ -146,5 +154,15 @@ public class Book
 
         Console.WriteLine($"Grades: {gradeStr}");
         Console.WriteLine($"Displaying {displayedGrades}/{grades.Count} grades");
+    }
+}
+
+public class BookGradeAddedEventArgs : EventArgs
+{
+    public double Grade { get; }
+
+    public BookGradeAddedEventArgs(double grade)
+    {
+        Grade = grade;
     }
 }

@@ -7,6 +7,7 @@ class Program
     static void Main(string[] args)
     {
         var book = new Book();
+        book.GradeAdded += OneGradeAdded;
 
         bool isRun = true;
 
@@ -75,48 +76,43 @@ class Program
     {
         bool isRun = true;
         string validOptions = @"^([qQ]|\d+)$";
-        double newGrade = 0;
-        bool hasPreviousGrade = false;
+        double newGrade;
+        Console.Clear();
 
         do
         {
-            // Console.Clear();
-            if (hasPreviousGrade)
-            {
-                Console.WriteLine($"Grade entered: {newGrade}");
-            }
             Console.WriteLine("Enter a new grade, or enter Q to Quit to Main Menu");
             string input = Console.ReadLine();
             bool isMatch = Regex.IsMatch(input, validOptions);
             if (!isMatch)
             {
                 Console.WriteLine("Please enter a valid grade, then press Enter.");
-                hasPreviousGrade = false;
                 continue;
             }
             
             if (input == "Q" || input == "q")
             {
                 isRun = false;
+                continue;
             }
-            else
+            
+            try
             {
-                try
-                {
-                    newGrade = double.Parse(input);
-                    book.AddGrade(newGrade);
-                }
-                catch (ArgumentException e)
-                {
-                    Console.WriteLine(e.Message);
-                    hasPreviousGrade = false;
-                    continue;
-                }
-                
-                hasPreviousGrade = true;
+                newGrade = double.Parse(input);
+                book.AddGrade(newGrade);
+            }
+            catch (ArgumentException e)
+            {
+                Console.WriteLine(e.Message);
+                continue;
             }
             
         } while (isRun);
+    }
+
+    static void OneGradeAdded(object sender, BookGradeAddedEventArgs eventArgs)
+    {
+        Console.WriteLine($"Grade added: {eventArgs.Grade}");
     }
 
     static void DisplayGrades(Book book)
