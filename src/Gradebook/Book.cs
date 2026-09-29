@@ -19,7 +19,7 @@ public class Book
         }
         else
         {
-            Console.WriteLine("Invalid value; grade must be between 0 and 100");
+            throw new ArgumentException($"Invalid {nameof(grade)}; value must be between 0 and 100");
         }
     }
 

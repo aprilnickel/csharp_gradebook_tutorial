@@ -97,9 +97,18 @@ class Program
             }
             else
             {
-                newGrade = double.Parse(input);
-                book.AddGrade(newGrade);
-                // TODO: add exception on AddGrade error validation to hasPreviousGrade = false & continue
+                try
+                {
+                    newGrade = double.Parse(input);
+                    book.AddGrade(newGrade);
+                }
+                catch (ArgumentException e)
+                {
+                    Console.WriteLine(e.Message);
+                    hasPreviousGrade = false;
+                    continue;
+                }
+                
                 hasPreviousGrade = true;
             }
             
