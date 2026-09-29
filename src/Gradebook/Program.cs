@@ -20,9 +20,6 @@ class Program
                 case 'A':
                     AddNumberGrade(book);
                     break;
-                case 'L':
-                    AddLetterGrade(book);
-                    break;
                 case 'D':
                     DisplayGrades(book);
                     break;
@@ -40,8 +37,7 @@ class Program
     {
         Console.Clear();
         Console.WriteLine("Welcome to your Grade Book. Please select an option.");
-        Console.WriteLine("A   Add a grade (number)");
-        Console.WriteLine("L   Add a grade (letter)");
+        Console.WriteLine("A   Add a grade (number between 0-100)");
         Console.WriteLine("D   Display grades");
         Console.WriteLine("S   Display grade book statistics");
         Console.WriteLine("Q   Quit");
@@ -108,11 +104,6 @@ class Program
             }
             
         } while (isRun);
-    }
-
-    static void AddLetterGrade(Book book)
-    {
-        // TODO
     }
 
     static void DisplayGrades(Book book)
