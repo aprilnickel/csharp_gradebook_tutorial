@@ -6,7 +6,7 @@ class Program
 {
     static void Main(string[] args)
     {
-        var book = new Book();
+        var book = new InMemoryBook();
         book.GradeAdded += OneGradeAdded;
 
         bool isRun = true;

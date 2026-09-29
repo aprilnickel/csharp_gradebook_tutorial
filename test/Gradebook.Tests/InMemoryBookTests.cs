@@ -1,11 +1,11 @@
 namespace Gradebook.Tests;
 
-public class BookTests
+public class InMemoryBookTests
 {
     [Fact]
     public void BookCalculatesAverageGrade()
     {
-        var book = new Book("Test Book");
+        var book = new InMemoryBook("Test Book");
         book.AddGrade(90.0);
         book.AddGrade(80.0);
         book.AddGrade(70.0);
@@ -21,7 +21,7 @@ public class BookTests
     [Fact]
     public void GradeMustBeBetween0And100()
     {
-        var book = new Book("Test Book");
+        var book = new InMemoryBook("Test Book");
         Assert.Throws<ArgumentException>(() => book.AddGrade(-12));
         Assert.Throws<ArgumentException>(() => book.AddGrade(105));
         Statistics stats = book.GetStatistics();

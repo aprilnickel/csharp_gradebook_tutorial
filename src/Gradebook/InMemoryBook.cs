@@ -1,23 +1,65 @@
 ﻿namespace Gradebook;
 
+public interface IBook
+{
+    void AddGrade(double grade);
+    Statistics GetStatistics();
+    void DisplayStatistics();
+    void DisplayGrades();
+    string Name { get; }
+    event GradeAddedDelegate GradeAdded;
+}
+
+public abstract class Book : NamedObject, IBook
+{
+    public Book() : base()
+    {
+    }
+    
+    public Book(string name) : base(name)
+    {
+    }
+    
+    public virtual event GradeAddedDelegate GradeAdded;
+    
+    public abstract void AddGrade(double grade);
+    public virtual Statistics GetStatistics()
+    {
+        throw new NotImplementedException();
+    }
+
+    public void DisplayStatistics()
+    {
+        Statistics stats = GetStatistics();
+
+        Console.WriteLine($"Name: {Name}");
+        Console.WriteLine($"Highest grade: {stats.High}");
+        Console.WriteLine($"Lowest grade: {stats.Low}");
+        Console.WriteLine($"Average grade: {stats.Average}");
+        Console.WriteLine($"Letter grade: {stats.Letter}");
+    }
+
+    public abstract void DisplayGrades();
+}
+
 public delegate void GradeAddedDelegate(object sender, BookGradeAddedEventArgs args);
 
-public class Book : NamedObject
+public class InMemoryBook : Book
 {
     private List<double> grades;
 
-    public Book() : base()
+    public InMemoryBook() : base()
     {
         grades = new List<double>();
     }
 
-    public Book(string name) : base(name)
+    public InMemoryBook(string name) : base(name)
     {
         grades = new List<double>();
         Name = name;
     }
     
-    public void AddGrade(double grade)
+    public override void AddGrade(double grade)
     {
         if (grade <= 100 && grade >= 0)
         {
@@ -33,7 +75,7 @@ public class Book : NamedObject
         }
     }
     
-    public event GradeAddedDelegate GradeAdded;
+    public override event GradeAddedDelegate GradeAdded;
 
     public void AddLetterGrade(char letter)
     {
@@ -61,7 +103,7 @@ public class Book : NamedObject
         }
     }
 
-    public Statistics GetStatistics()
+    public override Statistics GetStatistics()
     {
         Statistics stats = new Statistics();
         stats.Average = 0.0;
@@ -106,18 +148,7 @@ public class Book : NamedObject
         return stats;
     }
 
-    public void DisplayStatistics()
-    {
-        Statistics stats = GetStatistics();
-
-        Console.WriteLine($"Name: {Name}");
-        Console.WriteLine($"Highest grade: {stats.High}");
-        Console.WriteLine($"Lowest grade: {stats.Low}");
-        Console.WriteLine($"Average grade: {stats.Average}");
-        Console.WriteLine($"Letter grade: {stats.Letter}");
-    }
-
-    public void DisplayGrades()
+    public override void DisplayGrades()
     {
         string gradeStr;
         int displayedGrades = 20;
