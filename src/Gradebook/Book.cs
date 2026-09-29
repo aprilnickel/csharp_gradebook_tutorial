@@ -93,4 +93,32 @@ public class Book
         
         return stats;
     }
+
+    public void DisplayStatistics()
+    {
+        Statistics stats = GetStatistics();
+        
+        Console.WriteLine($"Highest grade: {stats.High}");
+        Console.WriteLine($"Lowest grade: {stats.Low}");
+        Console.WriteLine($"Average grade: {stats.Average}");
+        Console.WriteLine($"Letter grade: {stats.Letter}");
+    }
+
+    public void DisplayGrades()
+    {
+        string gradeStr;
+        int displayedGrades = 20;
+        if (grades.Count > displayedGrades)
+        {
+            gradeStr = String.Join(", ", grades[0..displayedGrades]);
+        }
+        else
+        {
+            displayedGrades = grades.Count;
+            gradeStr = String.Join(", ", grades);
+        }
+
+        Console.WriteLine($"Grades: {gradeStr}");
+        Console.WriteLine($"Displaying {displayedGrades}/{grades.Count} grades");
+    }
 }
