@@ -3,12 +3,37 @@
 public class Book
 {
     private List<double> grades;
-    public string Name;
+    private string name;
+
+    public Book()
+    {
+        grades = new List<double>();
+    }
 
     public Book(string name)
     {
         grades = new List<double>();
         Name = name;
+    }
+
+    public string Name
+    {
+        get
+        {
+            return name;
+        }
+        set
+        {
+            if (!String.IsNullOrEmpty(value))
+            {
+                name = value;
+            }
+            else
+            {
+                throw new ArgumentException("Name cannot be empty");
+            }
+            
+        }
     }
     
     public void AddGrade(double grade)
@@ -97,7 +122,8 @@ public class Book
     public void DisplayStatistics()
     {
         Statistics stats = GetStatistics();
-        
+
+        Console.WriteLine($"Name: {Name}");
         Console.WriteLine($"Highest grade: {stats.High}");
         Console.WriteLine($"Lowest grade: {stats.Low}");
         Console.WriteLine($"Average grade: {stats.Average}");

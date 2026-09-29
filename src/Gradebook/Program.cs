@@ -6,13 +6,13 @@ class Program
 {
     static void Main(string[] args)
     {
-        var book = new Book("Grade Book");
+        var book = new Book();
 
         bool isRun = true;
 
         do
         {
-            DisplayMainMenu();
+            DisplayMainMenu(book);
             char selectedOption = GetValidMainMenuSelection();
             
             switch (selectedOption)
@@ -26,6 +26,9 @@ class Program
                 case 'S':
                     DisplayStatistics(book);
                     break;
+                case 'N':
+                    ChangeName(book);
+                    break;
                 case 'Q':
                     isRun = false;
                     break;
@@ -33,19 +36,20 @@ class Program
         } while (isRun);
     }
 
-    static void DisplayMainMenu()
+    static void DisplayMainMenu(Book book)
     {
         Console.Clear();
-        Console.WriteLine("Welcome to your Grade Book. Please select an option.");
+        Console.WriteLine($"Welcome to your Grade Book '{book.Name}'. Please select an option.");
         Console.WriteLine("A   Add a grade (number between 0-100)");
         Console.WriteLine("D   Display grades");
         Console.WriteLine("S   Display grade book statistics");
+        Console.WriteLine("N   Change grade book name");
         Console.WriteLine("Q   Quit");
     }
 
     static char GetValidMainMenuSelection()
     {
-        string validOptions = "^[aAdDlLqQsS]$";
+        string validOptions = "^[aAdDlLnNqQsS]$";
         bool isValidSelection = false;
         char selectedOption = 'Q';
         do
@@ -129,5 +133,34 @@ class Program
         book.DisplayStatistics();
         Console.WriteLine("Press any key to continue...");
         Console.ReadKey();
+    }
+
+    static void ChangeName(Book book)
+    {
+        bool isRun = true;
+        do
+        {
+            Console.WriteLine($"Current name: {book.Name}");
+            Console.WriteLine("Enter a new name for your grade book, or enter Q to Quit to Main Menu");
+            string input = Console.ReadLine();
+            
+            if (input == "Q" || input == "q")
+            {
+                isRun = false;
+                continue;
+            }
+            
+            try
+            {
+                book.Name = input;
+            }
+            catch (ArgumentException e)
+            {
+                Console.WriteLine(e.Message);
+                continue;
+            }
+            
+            isRun = false;
+        } while (isRun);
     }
 }
