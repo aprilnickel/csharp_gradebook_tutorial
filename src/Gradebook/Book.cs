@@ -2,40 +2,19 @@
 
 public delegate void GradeAddedDelegate(object sender, BookGradeAddedEventArgs args);
 
-public class Book
+public class Book : NamedObject
 {
     private List<double> grades;
-    private string name;
 
-    public Book()
+    public Book() : base()
     {
         grades = new List<double>();
     }
 
-    public Book(string name)
+    public Book(string name) : base(name)
     {
         grades = new List<double>();
         Name = name;
-    }
-
-    public string Name
-    {
-        get
-        {
-            return name;
-        }
-        set
-        {
-            if (!String.IsNullOrEmpty(value))
-            {
-                name = value;
-            }
-            else
-            {
-                throw new ArgumentException("Name cannot be empty");
-            }
-            
-        }
     }
     
     public void AddGrade(double grade)
