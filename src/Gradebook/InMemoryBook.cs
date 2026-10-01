@@ -62,45 +62,10 @@ public class InMemoryBook : Book
     public override Statistics GetStatistics()
     {
         Statistics stats = new Statistics();
-        stats.Average = 0.0;
-        stats.High = double.MinValue;
-        stats.Low = double.MaxValue;
-        
         foreach (double grade in grades)
         {
-            stats.Average += grade;
-            stats.High = Math.Max(stats.High, grade);
-            stats.Low = Math.Min(stats.Low, grade);
+            stats.AddGrade(grade);
         }
-
-        if (grades.Count > 0)
-        {
-            stats.Average /= grades.Count;
-        }
-
-        switch (stats.Average)
-        {
-            case double grade when grade >= 90.0:
-                stats.Letter = 'A';
-                break;
-            
-            case double grade when grade >= 80.0:
-                stats.Letter = 'B';
-                break;
-            
-            case double grade when grade >= 70.0:
-                stats.Letter = 'C';
-                break;
-            
-            case double grade when grade >= 60.0:
-                stats.Letter = 'D';
-                break;
-            
-            default:
-                stats.Letter = 'F';
-                break;
-        }
-        
         return stats;
     }
 
