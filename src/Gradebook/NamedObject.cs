@@ -7,7 +7,14 @@ public class NamedObject
     {
         get
         {
-            return name;
+            if (name == null || name.Length == 0)
+            {
+                return "Default";
+            }
+            else
+            {
+                return name;
+            }
         }
         set
         {
