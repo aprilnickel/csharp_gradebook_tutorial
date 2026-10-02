@@ -5,24 +5,18 @@ namespace Gradebook;
 public class DiskBook : Book
 {
     private const string PATH = @"C:\Users\april\Documents\code\csharp_gradebook_tutorial\output\";
-    private List<double> grades;
-
-    public DiskBook() : base()
+    private string filename
     {
-        grades = new List<double>();
-    }
-
-    public DiskBook(string name) : base(name)
-    {
-        grades = new List<double>();
-        Name = name;
+        get
+        {
+            return $"{Name}.txt";
+        }
     }
     
     public override void AddGrade(double grade)
     {
         if (grade <= 100 && grade >= 0)
         {
-            string filename = $"{Name}.txt";
             using (StreamWriter sw = File.AppendText(PATH + filename))
             {
                 sw.WriteLine(grade);
@@ -44,63 +38,44 @@ public class DiskBook : Book
     public override Statistics GetStatistics()
     {
         Statistics stats = new Statistics();
-        // stats.Average = 0.0;
-        // stats.High = double.MinValue;
-        // stats.Low = double.MaxValue;
-        //
-        // foreach (double grade in grades)
-        // {
-        //     stats.Average += grade;
-        //     stats.High = Math.Max(stats.High, grade);
-        //     stats.Low = Math.Min(stats.Low, grade);
-        // }
-        //
-        // if (grades.Count > 0)
-        // {
-        //     stats.Average /= grades.Count;
-        // }
-        //
-        // switch (stats.Average)
-        // {
-        //     case double grade when grade >= 90.0:
-        //         stats.Letter = 'A';
-        //         break;
-        //     
-        //     case double grade when grade >= 80.0:
-        //         stats.Letter = 'B';
-        //         break;
-        //     
-        //     case double grade when grade >= 70.0:
-        //         stats.Letter = 'C';
-        //         break;
-        //     
-        //     case double grade when grade >= 60.0:
-        //         stats.Letter = 'D';
-        //         break;
-        //     
-        //     default:
-        //         stats.Letter = 'F';
-        //         break;
-        // }
-        //
+        using (StreamReader sr = File.OpenText(PATH + filename))
+        {
+            string line = "";
+            while ((line = sr.ReadLine()) != null)
+            {
+                stats.AddGrade(double.Parse(line));
+            }
+        }
         return stats;
     }
 
     public override void DisplayGrades()
     {
-        // string gradeStr;
-        // int displayedGrades = 20;
-        // if (grades.Count > displayedGrades)
-        // {
-        //     gradeStr = String.Join(", ", grades[0..displayedGrades]);
-        // }
-        // else
-        // {
-        //     displayedGrades = grades.Count;
-        //     gradeStr = String.Join(", ", grades);
-        // }
-        //
-        // Console.WriteLine($"Grades: {gradeStr}");
-        // Console.WriteLine($"Displaying {displayedGrades}/{grades.Count} grades");
+        string gradeStr = "";
+        int maxDisplayedGrades = 20;
+        int displayedGrades = 0;
+        int totalGrades = 0;
+        
+        using (StreamReader sr = File.OpenText(PATH + filename))
+        {
+            string line = "";
+            while ((line = sr.ReadLine()) != null)
+            {
+                if (displayedGrades <= maxDisplayedGrades)
+                {
+                    if (gradeStr.Length > 0)
+                    {
+                        gradeStr += ", ";
+                    }
+                    gradeStr += double.Parse(line);
+                    displayedGrades++;
+                }
+                
+                totalGrades++;
+            }
+        }
+        
+        Console.WriteLine($"Grades: {gradeStr}");
+        Console.WriteLine($"Displaying {displayedGrades}/{totalGrades} grades");
     }
 }
